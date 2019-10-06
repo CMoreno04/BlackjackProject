@@ -9,7 +9,7 @@ public abstract class Hand {
 	List<Card> cards = new ArrayList<>();
 
 	public Hand() {
- 
+
 	}
 
 	public void addCard(Card card) {
@@ -22,6 +22,10 @@ public abstract class Hand {
 	}
 
 	public abstract int getHandValue();
+
+	protected Card getOneCard() {
+		return cards.get(0);
+	}
 
 	public String getHand() {
 		String hand = "";

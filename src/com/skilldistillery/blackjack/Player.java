@@ -14,6 +14,10 @@ public class Player {
 		hand.addCard(card);
 	}
 
+	public Card getSingleCard() {
+		return hand.getOneCard();
+	}
+
 	public String getPlayerHand() {
 		return hand.getHand();
 	}
@@ -21,7 +25,7 @@ public class Player {
 	public Hand getHand() {
 		return hand;
 	}
-	
+
 	public int getPlayerHandValue() {
 		return getHand().getHandValue();
 	}

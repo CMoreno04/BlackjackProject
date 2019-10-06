@@ -17,32 +17,32 @@ public class BlackjackHand extends Hand {
 	public String isBlackjackOrBust(int num) {
 		String result = "";
 		if (num == 21) {
-			result = "Blackjack";
-		}
-
-		else if (num > 21) {
-			result = "Bust";
-		}
-
-		else {
+			result = "blackjack";
+		} else if (num > 21) {
+			result = "bust";
+		} else {
 			result = "safe";
 		}
-
 		return result;
 	}
 
-	public void winOrLose(int player, int dealer) {
+	public int winOrLose(int player, int dealer) {
+		int result = 0;
 		if (player > dealer) {
 			System.out.println("Dealer busts.You win this hand.\n");
+			result = 1;
 		}
 
 		else if (dealer > player) {
 			System.out.println("Dealer won this hand.\n");
+			result = -1;
 		}
 
 		else if (player == dealer) {
 			System.out.println("Tie.\n");
+			result = 2;
 		}
+		return result;
 	}
 
 }

@@ -11,7 +11,7 @@ public class BlackJackApp {
 	private Dealer dealer;
 	private Player player;
 	private BlackjackHand black;
-	private boolean gtfo = true;
+	private boolean getOut = true;
 
 	public static void main(String[] args) {
 		BlackJackApp app = new BlackJackApp();
@@ -26,6 +26,7 @@ public class BlackJackApp {
 		player = new Player();
 		black = new BlackjackHand();
 
+		System.out.println("New Hand.\n");
 		getCardsToPLayers();
 
 		do {
@@ -33,16 +34,24 @@ public class BlackJackApp {
 			switch (input) {
 
 			case "hit":
-				String res= hitOrStand(input);
+				hitOrStay(input);
 				break;
 
 			case "stand":
-				stand();
+				stay();
+				System.out.println(dealer.getPlayerHand());
+				int determinateWin = black.winOrLose(player.getPlayerHandValue(), dealer.getPlayerHandValue());
+
+				if (determinateWin == 1 || determinateWin == -1) {
+					getOut = false;
+				} else {
+					getOut = true;
+				}
+
 				break;
 
 			case "another hand":
-				System.out.println("NEW HAND!");
-				gtfo = false;
+				getOut = false;
 				break;
 
 			case "quit":
@@ -50,7 +59,7 @@ public class BlackJackApp {
 				System.exit(0);
 			}
 
-		} while (gtfo == true);
+		} while (getOut == true);
 	}
 
 	private void getCardsToPLayers() {
@@ -58,35 +67,34 @@ public class BlackJackApp {
 			player.addCard(dealer.dealCard());
 			dealer.getCard();
 		}
-		System.out.println("Cards Dealt With.");
+		System.out.print("Dealer has: \n" + dealer.getSingleCard());
 		System.out.println("Player Has:\n" + player.getPlayerHand());
-		System.out.println(player.getPlayerHandValue());
+		System.out.println("With a total value of: " + player.getPlayerHandValue() + "\n");
 	}
 
 	private String menu() {
 		System.out.println("What would you like to do?");
 		System.out.println("Hit");
-		System.out.println("Stand");
+		System.out.println("Stay");
 		System.out.println("Another Hand");
 		System.out.println("Quit");
 		return kb.nextLine().toLowerCase();
 	}
 
-	private void hitOrStand(String input) {
+	private void hitOrStay(String input) {
 		if (input.equalsIgnoreCase("hit")) {
 			String result = hit();
 			if (result.equalsIgnoreCase("bust")) {
-				System.out.println("Bust, you lose.");
-				gtfo = false;
+				System.out.println("Bust, you lose.\n");
+				getOut = false;
 			}
 
 			else if (result.equalsIgnoreCase("blackjack")) {
-				System.out.println("Blackjack, you win.");
-				gtfo = false;
+				System.out.println("Blackjack, you win.\n");
+				getOut = false;
 			}
 
 			else if (result.equalsIgnoreCase("safe")) {
-				System.out.println("You are safe.");
 				System.out.println("Your hand is currently:\n" + player.getPlayerHand());
 				System.out.println("\nWith a total value of:\n" + player.getPlayerHandValue() + "\n");
 			}
@@ -99,16 +107,13 @@ public class BlackJackApp {
 		Card card = dealer.dealCard();
 		player.addCard(card);
 		System.out.println("\nYou drew " + card.toString());
-		System.out.println(player.getPlayerHandValue());
 		return black.isBlackjackOrBust(player.getPlayerHandValue());
 
 	}
 
-	private void stand() {
+	private void stay() {
+		System.out.println("The dealer has " + dealer.getSingleCard().toString() + "\n");
 		dealer.hitOrStayDealer();
-		System.out.println(dealer.getPlayerHand());
-		black.winOrLose(player.getPlayerHandValue(), dealer.getPlayerHandValue());
-		System.out.println("With: " + dealer.getPlayerHandValue());
 
 	}
 }
