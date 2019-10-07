@@ -101,10 +101,9 @@ public class BlackJackApp {
 	}
 
 	private String hit() {
-		Card card = dealer.dealCard();
-		player.addCard(card);
+		player.addCard(dealer.dealCard());
 
-		System.out.println("\nYou drew " + card.toString());
+		System.out.println("\nYou drew " + player.getSingleCard().toString());
 
 		System.out.println("Dealer has: \n" + dealer.getSingleCard());
 		System.out.println("\nPlayer Has:\n" + player.getPlayerHand());
