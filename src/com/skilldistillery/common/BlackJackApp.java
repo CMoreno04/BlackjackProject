@@ -30,31 +30,31 @@ public class BlackJackApp {
 		getCardsToPLayers();
 
 		do {
+
 			String input = menu();
 			switch (input) {
 
 			case "hit":
+			case "1":
 				hitOrStay(input);
 				break;
 
-			case "stand":
+			case "stay":
+			case "2":
 				stay();
 				System.out.println(dealer.getPlayerHand());
-				int determinateWin = black.winOrLose(player.getPlayerHandValue(), dealer.getPlayerHandValue());
-
-				if (determinateWin == 1 || determinateWin == -1) {
-					getOut = false;
-				} else {
-					getOut = true;
-				}
+				System.out.println("Dealer hand value: " + dealer.getPlayerHandValue());
+				determinateWinner();
 
 				break;
 
 			case "another hand":
+			case "3":
 				getOut = false;
 				break;
 
 			case "quit":
+			case "4":
 				System.out.println("Goodbye!");
 				System.exit(0);
 			}
@@ -68,16 +68,18 @@ public class BlackJackApp {
 			dealer.getCard();
 		}
 		System.out.print("Dealer has: \n" + dealer.getSingleCard());
-		System.out.println("Player Has:\n" + player.getPlayerHand());
+		System.out.println("\nPlayer Has:\n" + player.getPlayerHand());
 		System.out.println("With a total value of: " + player.getPlayerHandValue() + "\n");
+		hitOrStay(black.isBlackjackOrBust(player.getPlayerHandValue()));
+
 	}
 
 	private String menu() {
 		System.out.println("What would you like to do?");
-		System.out.println("Hit");
-		System.out.println("Stay");
-		System.out.println("Another Hand");
-		System.out.println("Quit");
+		System.out.println("1.Hit");
+		System.out.println("2.Stay");
+		System.out.println("3.Another Hand");
+		System.out.println("4.Quit");
 		return kb.nextLine().toLowerCase();
 	}
 
@@ -86,21 +88,25 @@ public class BlackJackApp {
 			String result = hit();
 			if (result.equalsIgnoreCase("bust")) {
 				System.out.println("Bust, you lose.\n");
-				getOut = false;
 			}
 
 			else if (result.equalsIgnoreCase("blackjack")) {
 				System.out.println("Blackjack, you win.\n");
-				getOut = false;
 			}
 
 			else if (result.equalsIgnoreCase("safe")) {
-				System.out.println("Your hand is currently:\n" + player.getPlayerHand());
-				System.out.println("\nWith a total value of:\n" + player.getPlayerHandValue() + "\n");
+				System.out.print("Dealer has: \n" + dealer.getSingleCard());
+				System.out.println("\nPlayer Has:\n" + player.getPlayerHand());
+				System.out.println("With a total value of: " + player.getPlayerHandValue() + "\n");
 			}
 
 		}
 
+	}
+
+	private void determinateWinner() {
+		black.winOrLose(player.getPlayerHandValue(), dealer.getPlayerHandValue());
+		getOut = false;
 	}
 
 	private String hit() {

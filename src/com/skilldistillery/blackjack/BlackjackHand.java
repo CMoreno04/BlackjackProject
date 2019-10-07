@@ -26,23 +26,23 @@ public class BlackjackHand extends Hand {
 		return result;
 	}
 
-	public int winOrLose(int player, int dealer) {
-		int result = 0;
+	public void winOrLose(int player, int dealer) {
 		if (player > dealer) {
-			System.out.println("Dealer busts.You win this hand.\n");
-			result = 1;
+			System.out.println("You win this hand.\n");
 		}
 
 		else if (dealer > player) {
-			System.out.println("Dealer won this hand.\n");
-			result = -1;
+			if(dealer==21) {
+				System.out.println("Blackjack! Dealer won this hand.\n");
+			}
+			else {
+				System.out.println("Dealer won this hand.\n");
+			}
 		}
 
 		else if (player == dealer) {
 			System.out.println("Tie.\n");
-			result = 2;
 		}
-		return result;
 	}
 
 }
