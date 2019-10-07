@@ -24,12 +24,12 @@ public class Dealer extends Player {
 	}
 
 	public void hitOrStayDealer() {
-		if (hand.getHandValue() >= 17 || hand.getHandValue()== 21) {
+		if (hand.getHandValue() >= 17 && hand.getHandValue() <= 21) {
 			System.out.println("Dealer Stays\n");
 		}
-		
-		else {
-			System.out.println("Dealer Draws.");
+
+		else if (hand.getHandValue() < 17) {
+			System.out.println("\nDealer Draws.\n");
 			getCard();
 		}
 	}
