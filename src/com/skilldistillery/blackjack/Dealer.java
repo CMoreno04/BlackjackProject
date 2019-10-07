@@ -25,10 +25,12 @@ public class Dealer extends Player {
 
 	public void hitOrStayDealer() {
 		if (hand.getHandValue() >= 17 && hand.getHandValue() <= 21) {
-			System.out.println("Dealer Stays\n");
+			System.out.println("Cards left on the deck: " + cards.checkSize() );
+			System.out.println("Dealer Stays.\n");
 		}
 
 		else if (hand.getHandValue() < 17) {
+			System.out.println("Cards left on the deck: " + cards.checkSize());
 			System.out.println("\nDealer Draws.\n");
 			getCard();
 		}

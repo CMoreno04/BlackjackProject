@@ -41,10 +41,15 @@ public class BlackJackApp {
 			case "stay":
 			case "2":
 				stay();
+				player.getHand().clearHand();
+				dealer.getHand().clearHand();
+				getOut = false;
 				break;
 
 			case "another hand":
 			case "3":
+				player.getHand().clearHand();
+				dealer.getHand().clearHand();
 				getOut = false;
 				break;
 
