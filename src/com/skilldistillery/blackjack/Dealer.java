@@ -23,9 +23,13 @@ public class Dealer extends Player {
 		hand.clearHand();
 	}
 
+	public Deck getDeck() {
+		return cards;
+	}
+
 	public void hitOrStayDealer() {
 		if (hand.getHandValue() >= 17 && hand.getHandValue() <= 21) {
-			System.out.println("Cards left on the deck: " + cards.checkSize() );
+			System.out.println("Cards left on the deck: " + cards.checkSize());
 			System.out.println("Dealer Stays.\n");
 		}
 

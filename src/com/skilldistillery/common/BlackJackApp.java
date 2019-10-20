@@ -8,9 +8,9 @@ import com.skilldistillery.blackjack.Player;
 
 public class BlackJackApp {
 	private Scanner kb = new Scanner(System.in);
-	private Dealer dealer;
-	private Player player;
-	private BlackjackHand black;
+	private Dealer dealer = new Dealer();
+	private Player player = new Player();
+	private BlackjackHand black = new BlackjackHand();
 	private boolean getOut = true;
 
 	public static void main(String[] args) {
@@ -22,15 +22,12 @@ public class BlackJackApp {
 	}
 
 	private void run() {
-		dealer = new Dealer();
-		player = new Player();
-		black = new BlackjackHand();
 
-		System.out.println("New Hand.\n");
+		System.out.println("********** New Hand **********\n");
 		getCardsToPLayers();
 
 		do {
-
+			System.out.println("Deck Size: " + dealer.getDeck().checkSize());
 			switch (menu()) {
 
 			case "hit":
@@ -56,6 +53,11 @@ public class BlackJackApp {
 			case "quit":
 			case "4":
 				System.out.println("Goodbye!");
+				System.exit(0);
+			}
+
+			if (dealer.getDeck().checkSize() <= 5) {
+				System.out.println("\nAll out of cards! Goodbye!");
 				System.exit(0);
 			}
 
@@ -87,11 +89,15 @@ public class BlackJackApp {
 	private void hitOrStay(String input) {
 		if (input.equalsIgnoreCase("bust")) {
 			System.out.println("Bust, you lose.\n");
+			player.getHand().clearHand();
+			dealer.getHand().clearHand();
 			getOut = false;
 		}
 
 		else if (input.equalsIgnoreCase("blackjack")) {
 			System.out.println("Blackjack, you win.\n");
+			player.getHand().clearHand();
+			dealer.getHand().clearHand();
 			getOut = false;
 		}
 
@@ -102,18 +108,19 @@ public class BlackJackApp {
 
 	private void determinateWinner() {
 		black.winOrLose(player.getPlayerHandValue(), dealer.getPlayerHandValue());
+		player.getHand().clearHand();
+		dealer.getHand().clearHand();
 		getOut = false;
 	}
 
 	private String hit() {
+
 		player.addCard(dealer.dealCard());
 
 		System.out.println("\nYou drew " + player.getSingleCard().toString());
-
 		System.out.println("Dealer has: \n" + dealer.getSingleCard());
 		System.out.println("\nPlayer Has:\n" + player.getPlayerHand());
 		System.out.println("With a total value of: " + player.getPlayerHandValue() + "\n");
-
 		return black.isBlackjackOrBust(player.getPlayerHandValue());
 
 	}
